@@ -3,7 +3,8 @@
 
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
     <title>しかく と ながしかく</title>
     <style>
         :root {
@@ -41,7 +42,7 @@
 
         #app {
             width: 100vw;
-            height: 100vh;
+            height: 100dvh;
             display: flex;
             flex-direction: column;
             position: relative;
@@ -62,10 +63,10 @@
 
         .bg-shape {
             position: absolute;
-            opacity: 0.15;
+            opacity: 0.12;
         }
 
-        /* UI Persistent */
+        /* persistent UI */
         .persistent-ui {
             position: fixed;
             top: 0;
@@ -81,13 +82,13 @@
         .persistent-btn {
             width: 70px;
             height: 70px;
-            background: rgba(255, 255, 255, 0.9);
-            border-radius: 15px;
+            background: rgba(255, 255, 255, 0.92);
+            border-radius: 18px;
             display: flex;
             align-items: center;
             justify-content: center;
             font-size: 2.5rem;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
             cursor: pointer;
             pointer-events: auto;
             border: 2px solid #ddd;
@@ -98,33 +99,35 @@
             transform: scale(0.9);
         }
 
+        /* Ultimate iPad Safe Area Padding (220px bottom blank space) */
         .screen {
             display: none;
             flex-direction: column;
             align-items: center;
-            justify-content: center;
+            justify-content: flex-start;
             width: 100%;
             height: 100%;
-            padding: 20px;
+            padding: 100px 40px 220px;
         }
 
         .screen.active {
             display: flex;
         }
 
-        /* Title Screen */
+        /* Title Screen Grid */
         h1 {
-            font-size: 3.5rem;
-            margin-bottom: 30px;
+            font-size: 4rem;
+            margin-bottom: 2rem;
             color: var(--primary-color);
             text-shadow: 2px 2px 0px #fff;
+            text-align: center;
         }
 
         .home-grid {
             display: grid;
             grid-template-columns: repeat(2, 1fr);
-            gap: 40px;
-            margin-bottom: 40px;
+            gap: 30px;
+            margin-bottom: 30px;
         }
 
         .menu-shape-container {
@@ -141,30 +144,33 @@
 
         .menu-shape-label {
             margin-top: 10px;
-            font-size: 1.6rem;
+            font-size: 1.8rem;
             font-weight: bold;
             color: #555;
             background: white;
-            padding: 5px 20px;
+            padding: 5px 25px;
             border-radius: 20px;
+            box-shadow: 0 4px #eee;
         }
 
+        /* Instruction Box */
         .instruction-box {
             display: flex;
             align-items: center;
             gap: 20px;
             background: white;
-            padding: 10px 45px;
+            padding: 12px 50px;
             border-radius: 60px;
             box-shadow: var(--card-shadow);
             border: 4px solid #4a90e2;
-            margin-bottom: 1rem;
-            font-size: 2.2rem;
+            margin-bottom: 30px;
+            font-size: 2.4rem;
             font-weight: bold;
             z-index: 10;
+            flex-shrink: 0;
         }
 
-        /* Choices Area */
+        /* Choice Area (Uses flex to fill middle space) */
         .question-area {
             flex-grow: 1;
             display: flex;
@@ -172,16 +178,15 @@
             align-items: center;
             justify-content: center;
             width: 100%;
-            padding-top: 50px;
             position: relative;
+            min-height: 0;
         }
 
         .choices-area {
             position: relative;
             width: 100%;
             height: 100%;
-            max-width: 1200px;
-            margin: 0 auto;
+            max-width: 1240px;
         }
 
         .shape-choice {
@@ -195,15 +200,15 @@
         }
 
         .shape-choice.found {
-            filter: drop-shadow(0 0 30px #f1c40f) brightness(1.2);
+            filter: drop-shadow(0 0 35px #f1c40f) brightness(1.2);
             pointer-events: none;
             z-index: 5;
         }
 
         /* Buttons */
         .btn {
-            padding: 15px 55px;
-            font-size: 1.8rem;
+            padding: 18px 60px;
+            font-size: 2rem;
             font-weight: bold;
             border: none;
             border-radius: 100px;
@@ -221,24 +226,25 @@
         }
 
         .btn-large {
-            font-size: 2.5rem;
-            padding: 25px 80px;
+            font-size: 3rem;
+            padding: 30px 100px;
         }
 
         .btn-sub {
             background-color: #95a5a6;
             box-shadow: 0 4px #7f8c8d;
-            font-size: 1.2rem;
-            padding: 10px 30px;
+            font-size: 1.4rem;
+            padding: 12px 40px;
         }
 
-        /* Settings */
+        /* Settings Grid */
         .settings-grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
             gap: 10px;
             width: 100%;
-            max-width: 1200px;
+            max-width: 1240px;
+            margin-top: 20px;
         }
 
         .setting-item {
@@ -246,25 +252,27 @@
             padding: 12px 20px;
             border-radius: 15px;
             box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
-            font-size: 1rem;
         }
 
         .setting-item label {
             display: block;
-            margin-bottom: 3px;
+            margin-bottom: 4px;
             font-weight: bold;
+            font-size: 1rem;
             color: #444;
         }
 
         .checkbox-row {
             display: flex;
             align-items: center;
-            gap: 10px;
+            gap: 12px;
+            font-size: 1.1rem;
         }
 
         input[type="checkbox"] {
-            width: 30px;
-            height: 30px;
+            width: 35px;
+            height: 35px;
+            cursor: pointer;
         }
 
         /* Overlays */
@@ -274,28 +282,29 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: rgba(255, 255, 255, 0.95);
+            background: rgba(255, 255, 255, 0.96);
             z-index: 2000;
             display: none;
             flex-direction: column;
             align-items: center;
             justify-content: center;
+            overflow: hidden;
         }
 
         .donut-mark {
-            width: 220px;
-            height: 220px;
-            border: 25px solid var(--success-color);
+            width: 250px;
+            height: 250px;
+            border: 35px solid var(--success-color);
             border-radius: 50%;
-            margin-bottom: 25px;
+            margin-bottom: 30px;
             animation: pop 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
         }
 
         .cross-mark {
-            width: 220px;
-            height: 220px;
+            width: 250px;
+            height: 250px;
             position: relative;
-            margin-bottom: 25px;
+            margin-bottom: 30px;
             animation: pop 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
         }
 
@@ -303,13 +312,13 @@
         .cross-mark::after {
             content: '';
             position: absolute;
-            width: 220px;
-            height: 25px;
+            width: 250px;
+            height: 35px;
             background: var(--error-color);
             top: 50%;
             left: 0;
             transform-origin: center;
-            border-radius: 10px;
+            border-radius: 15px;
         }
 
         .cross-mark::before {
@@ -339,7 +348,7 @@
         }
 
         .celebration-emoji {
-            font-size: 10rem;
+            font-size: 12rem;
             animation: bounce 0.8s infinite alternate;
         }
 
@@ -349,7 +358,7 @@
             }
 
             to {
-                transform: translateY(-30px);
+                transform: translateY(-40px);
             }
         }
 
@@ -380,9 +389,13 @@
             animation: shake 0.3s;
         }
 
+        /* High-Visibility Hint Glow */
         .hint-glow {
-            filter: brightness(1.3) drop-shadow(0 0 30px #f1c40f) !important;
-            scale: 1.15;
+            outline: 12px solid #f1c40f !important;
+            outline-offset: 8px;
+            filter: brightness(1.4) drop-shadow(0 0 60px #f1c40f) !important;
+            transform: translate(-50%, -50%) scale(1.2) !important;
+            z-index: 100;
         }
     </style>
 </head>
@@ -398,30 +411,30 @@
         </div>
 
         <!-- Title Screen -->
-        <div id="screen-title" class="screen active">
+        <div id="screen-title" class="screen active" style="justify-content: center;">
             <h1>しかく と ながしかく</h1>
             <div class="home-grid">
                 <div class="menu-shape-container" id="menu-sq">
-                    <svg width="100" height="100">
-                        <rect width="80" height="80" fill="var(--color-square)" x="10" y="10" />
+                    <svg width="120" height="120">
+                        <rect width="100" height="100" fill="var(--color-square)" x="10" y="10" />
                     </svg>
                     <div class="menu-shape-label">しかく</div>
                 </div>
                 <div class="menu-shape-container" id="menu-rect">
-                    <svg width="150" height="100">
-                        <rect width="130" height="80" fill="var(--color-rectangle)" x="10" y="10" />
+                    <svg width="180" height="120">
+                        <rect width="160" height="100" fill="var(--color-rectangle)" x="10" y="10" />
                     </svg>
                     <div class="menu-shape-label">ながしかく</div>
                 </div>
                 <div class="menu-shape-container" id="menu-cir">
-                    <svg width="100" height="100">
-                        <circle cx="50" cy="50" r="40" fill="var(--color-circle)" />
+                    <svg width="120" height="120">
+                        <circle cx="60" cy="60" r="50" fill="var(--color-circle)" />
                     </svg>
                     <div class="menu-shape-label">まる</div>
                 </div>
                 <div class="menu-shape-container" id="menu-tri">
-                    <svg width="100" height="100">
-                        <polygon points="50,10 90,90 10,90" fill="var(--color-triangle)" />
+                    <svg width="120" height="120">
+                        <polygon points="60,10 110,110 10,110" fill="var(--color-triangle)" />
                     </svg>
                     <div class="menu-shape-label">さんかく</div>
                 </div>
@@ -430,16 +443,16 @@
         </div>
 
         <!-- Settings Screen -->
-        <div id="screen-settings" class="screen">
-            <h2 style="margin-bottom: 10px;">先生用せってい</h2>
+        <div id="screen-settings" class="screen" style="justify-content: center;">
+            <h2 style="margin-bottom: 5px;">先生用せってい</h2>
             <div class="settings-grid">
                 <div class="setting-item"><label>色ランダム:</label>
                     <div class="checkbox-row"><input type="checkbox" id="setting-random-color"><span>ON</span></div>
                 </div>
                 <div class="setting-item"><label>選択肢の数 (2〜15):</label>
-                    <div style="display:flex;gap:10px;align-items:center;">
+                    <div style="display:flex;gap:15px;align-items:center;">
                         <input type="range" id="setting-choices" min="2" max="15" value="4" style="flex-grow:1;">
-                        <span id="choices-display" style="font-weight:bold;font-size:1.5rem;">4</span>
+                        <span id="choices-display" style="font-weight:bold;font-size:1.8rem;min-width:32px;">4</span>
                     </div>
                 </div>
                 <div class="setting-item"><label>ぜんぶ選ぼうモード:</label>
@@ -455,7 +468,7 @@
                 <div class="setting-item"><label>向きランダム (傾き):</label>
                     <div class="checkbox-row"><input type="checkbox" id="setting-random-rotation"><span>ON</span></div>
                 </div>
-                <div class="setting-item"><label>「まる・さんかく」を混ぜる:</label>
+                <div class="setting-item"><label>まる・さんかくを混ぜる:</label>
                     <div class="checkbox-row"><input type="checkbox" id="setting-review-mode" checked><span>ON</span>
                     </div>
                 </div>
@@ -471,9 +484,9 @@
                     </div>
                 </div>
                 <div class="setting-item"><label>問題数:</label><input type="number" id="setting-count" value="10" min="1"
-                        max="100" style="width:70px;font-size:1.2rem;"></div>
+                        max="100" style="width:80px;height:45px;font-size:1.6rem;"></div>
             </div>
-            <div style="margin-top: 20px; display: flex; gap: 20px;">
+            <div style="margin-top: 25px; display: flex; gap: 20px;">
                 <button class="btn btn-sub" id="btn-settings-back">戻る</button>
                 <button class="btn" id="btn-settings-apply">決定</button>
             </div>
@@ -481,7 +494,7 @@
 
         <!-- Game Screen -->
         <div id="screen-game" class="screen">
-            <div class="progress-container">
+            <div class="progress-container" style="top:90px;">
                 <div class="progress-bar" id="game-progress"></div>
             </div>
             <div class="question-area">
@@ -491,48 +504,45 @@
                 </div>
                 <div class="choices-area" id="choices-area"></div>
             </div>
-            <div style="position: absolute; bottom: 30px; right: 30px; z-index: 100;">
-                <button class="btn btn-sub" id="btn-hint" style="background-color: #f1c40f;">ヒント</button>
+            <!-- Hint Button Positioned Well Above the Safety Blank Space -->
+            <div style="position: absolute; bottom: 80px; right: 40px; z-index: 100;">
+                <button class="btn btn-sub" id="btn-hint"
+                    style="background-color: #f1c40f; box-shadow: 0 4px #d4ac0d;">ヒント</button>
             </div>
         </div>
 
         <!-- Result Screen -->
-        <div id="screen-result" class="screen">
+        <div id="screen-result" class="screen" style="justify-content: center;">
             <div id="result-emoji" class="celebration-emoji">💮</div>
-            <h2 id="result-message" style="font-size: 3rem; text-align: center;">たいへんよくできました！</h2>
-            <div id="result-score" style="font-size: 2rem; margin-bottom: 40px;"></div>
+            <h2 id="result-message" style="font-size: 3.5rem;">たいへんよくできました！</h2>
+            <div id="result-score" style="font-size: 2.5rem; margin-bottom: 50px;"></div>
             <div style="display: flex; gap: 30px;">
                 <button class="btn btn-sub" id="btn-result-home">ホーム</button>
                 <button class="btn" id="btn-result-replay">もういちど</button>
             </div>
         </div>
 
-        <!-- Success Overlay -->
+        <!-- Overlays -->
         <div id="overlay-correct" class="overlay">
             <div class="donut-mark"></div>
-            <div style="font-size: 5rem; font-weight: bold; color: var(--success-color);">せいかい！</div>
-            <button class="btn btn-large" id="btn-next" style="margin-top: 50px;">つぎへ</button>
+            <div style="font-size: 6rem; font-weight: bold; color: var(--success-color);">せいかい！</div>
+            <button class="btn btn-large" id="btn-next" style="margin-top: 60px;">つぎへ</button>
         </div>
-
-        <!-- Incorrect Overlay -->
         <div id="overlay-incorrect" class="overlay">
             <div class="cross-mark"></div>
-            <div style="font-size: 5rem; font-weight: bold; color: var(--error-color);">不正解</div>
-            <div style="font-size: 1.8rem; margin-top: 20px; color: #666;">もういちど やってみよう</div>
+            <div style="font-size: 6rem; font-weight: bold; color: var(--error-color);">不正解</div>
+            <div style="font-size: 2rem; margin-top: 25px; color: #666;">もういちど やってみよう</div>
             <button class="btn btn-large" id="btn-retry"
-                style="margin-top: 50px; background-color: var(--error-color); box-shadow: 0 6px #2980b9;">やりなおす</button>
+                style="margin-top: 60px; background-color: var(--error-color);">やりなおす</button>
         </div>
     </div>
 
     <script>
         const $ = (id) => document.getElementById(id);
-        const AudioCtx = window.AudioContext || window.webkitAudioContext;
-        let audioCtx;
+        const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
         function playTone(f, d, t = 'sine') {
-            if (!audioCtx) audioCtx = new AudioCtx();
             if (audioCtx.state === 'suspended') audioCtx.resume();
-            const o = audioCtx.createOscillator();
-            const g = audioCtx.createGain();
+            const o = audioCtx.createOscillator(); const g = audioCtx.createGain();
             o.type = t; o.frequency.setValueAtTime(f, audioCtx.currentTime);
             g.gain.setValueAtTime(0.1, audioCtx.currentTime);
             g.gain.exponentialRampToValueAtTime(0.0001, audioCtx.currentTime + d);
@@ -554,28 +564,23 @@
             game: { idx: 0, score: 0, q: null, found: [], canTap: true }
         };
 
-        // --- Background Rain ---
         function spawnBgShape() {
             if (!State.config.bgAnim) return;
-            const types = ['sq', 'rect'];
             const colors = ['#3366ff33', '#22cc6633', '#f1c40f33', '#e74c3c33'];
-            const type = types[Math.floor(Math.random() * 2)];
-            const shape = document.createElement('div');
-            shape.className = 'bg-shape';
+            const shape = document.createElement('div'); shape.className = 'bg-shape';
             const size = Math.random() * 40 + 20;
-            Object.assign(shape.style, { width: (type === 'rect' ? size * 1.6 : size) + 'px', height: size + 'px', backgroundColor: colors[Math.floor(Math.random() * colors.length)], left: Math.random() * 100 + 'vw', top: '-60px' });
+            const isRect = Math.random() > 0.5;
+            Object.assign(shape.style, { width: (isRect ? size * 1.6 : size) + 'px', height: size + 'px', backgroundColor: colors[Math.floor(Math.random() * colors.length)], left: Math.random() * 100 + 'vw', top: '-60px' });
             $('bg-layer').appendChild(shape);
             shape.animate([{ top: '-60px', transform: 'rotate(0deg)' }, { top: '110vh', transform: `rotate(${Math.random() * 360}deg)` }], { duration: Math.random() * 8000 + 4000 }).onfinish = () => shape.remove();
         }
         setInterval(spawnBgShape, 2000);
 
-        // --- Shape Engine ---
         function getShapeHTML(type, color, size, rotate = 0, isIcon = false) {
             const s = isIcon ? 40 : size;
             const vw = (type === 'rectangle') ? 160 : (type === 'rect_v') ? 100 : 100;
             const vh = (type === 'rectangle') ? 100 : (type === 'rect_v') ? 160 : 100;
-            const w = (type === 'rectangle') ? s * 1.6 : s;
-            const h = (type === 'rect_v') ? s * 1.6 : s;
+            const w = (type === 'rectangle') ? s * 1.6 : s; const h = (type === 'rect_v') ? s * 1.6 : s;
             return `<svg width="${w}" height="${h}" viewBox="0 0 ${vw} ${vh}" style="transform:rotate(${rotate}deg);pointer-events:none;">
             ${(type === 'circle') ? `<circle cx="50" cy="50" r="50" fill="${color}"/>` :
                     (type === 'triangle') ? `<polygon points="50,0 100,100 0,100" fill="${color}"/>` :
@@ -590,29 +595,28 @@
             window.speechSynthesis.speak(ut);
         }
 
-        // --- Logic ---
         function generateQuestion() {
             const cfg = State.config;
             const palette = ['#e74c3c', '#3498db', '#2ecc71', '#f1c40f', '#9b59b6'];
             const fixed = { square: '#3366ff', rectangle: '#22cc66', rect_v: '#22cc66', circle: '#ff4444', triangle: '#ffcc00' };
-
             let target = Math.random() > 0.5 ? 'square' : 'rectangle';
             if (cfg.reviewMode && Math.random() > 0.6) target = ['circle', 'triangle'][Math.floor(Math.random() * 2)];
-
             const names = { square: 'しかく', rectangle: 'ながしかく', circle: 'まる', triangle: 'さんかく' };
             const text = `${names[target]} を ${cfg.multiSelect ? 'ぜんぶ ' : ''}えらぼう`;
 
-            const count = cfg.choicesCount;
+            const count = parseInt(cfg.choicesCount);
             let cols, rows, baseSize;
+            // SIGNIFICANTLY REDUCED SIZES TO PREVENT ANY OVERLAP
             if (count <= 2) { cols = 2; rows = 1; baseSize = 220; }
-            else if (count <= 4) { cols = 2; rows = 2; baseSize = 180; }
-            else if (count <= 6) { cols = 3; rows = 2; baseSize = 140; }
-            else if (count <= 9) { cols = 3; rows = 3; baseSize = 110; }
-            else if (count <= 12) { cols = 4; rows = 3; baseSize = 90; }
-            else { cols = 5; rows = 3; baseSize = 80; }
+            else if (count <= 4) { cols = 2; rows = 2; baseSize = 140; }
+            else if (count <= 6) { cols = 3; rows = 2; baseSize = 110; }
+            else if (count <= 9) { cols = 3; rows = 3; baseSize = 90; }
+            else if (count <= 12) { cols = 4; rows = 3; baseSize = 75; }
+            else { cols = 5; rows = 3; baseSize = 60; }
 
             const cellW = 100 / cols; const cellH = 100 / rows;
-            const jitterX = cfg.scatter ? cellW * 0.2 : 0; const jitterY = cfg.scatter ? cellH * 0.2 : 0;
+            // Strictly center within cells for zero-overlap guarantee
+            const jitterX = 0; const jitterY = 0;
 
             let choices = [];
             const pool = ['square', 'rectangle', 'rect_v'];
@@ -622,12 +626,11 @@
                 let type = (i === 0) ? target : pool[Math.floor(Math.random() * pool.length)];
                 const isTarget = (target === 'rectangle') ? (type === 'rectangle' || type === 'rect_v') : (type === target);
                 const color = cfg.randomColor ? palette[Math.floor(Math.random() * palette.length)] : fixed[type];
-                const size = baseSize * (cfg.randomSize ? (0.7 + Math.random() * 0.4) : 1);
+                const size = baseSize * (cfg.randomSize ? (0.8 + Math.random() * 0.2) : 1);
                 const rot = cfg.randomRotation ? (Math.random() * 80 - 40) : (type === 'rectangle' && Math.random() > 0.5 ? 90 : 0);
-
                 const col = i % cols; const row = Math.floor(i / cols);
-                const x = (col + 0.5) * cellW + (cfg.scatter ? (Math.random() - 0.5) * jitterX : 0);
-                const y = (row + 0.5) * cellH + (cfg.scatter ? (Math.random() - 0.5) * jitterY : 0);
+                const x = (col + 0.5) * cellW;
+                const y = (row + 0.5) * cellH; // No extra clamping here - the choices-area itself is sized via padding
                 choices.push({ type, color, size, rot, isTarget, x, y });
             }
             choices.sort(() => Math.random() - 0.5);
@@ -669,13 +672,8 @@
                 }
             } else {
                 Sound.incorrect();
-                if (State.config.errorVisual) {
-                    State.game.canTap = false;
-                    $('overlay-incorrect').style.display = 'flex';
-                } else {
-                    const el = $('choices-area').children[idx]; el.classList.add('error-shake');
-                    setTimeout(() => el.classList.remove('error-shake'), 300);
-                }
+                if (State.config.errorVisual) { State.game.canTap = false; $('overlay-incorrect').style.display = 'flex'; }
+                else { const el = $('choices-area').children[idx]; el.classList.add('error-shake'); setTimeout(() => el.classList.remove('error-shake'), 300); }
             }
         }
 
@@ -685,7 +683,7 @@
             $('btn-global-home').style.visibility = id === 'title' ? 'hidden' : 'visible';
         }
 
-        function nextStep() {
+        const nextStep = () => {
             if (State.game.idx >= State.config.count) {
                 showScreen('result');
                 const rate = State.game.score / State.config.count;
@@ -723,21 +721,16 @@
         $('btn-global-home').onclick = () => confirm('タイトルに戻りますか？') && showScreen('title');
         $('btn-start').onclick = () => { State.game.idx = 0; State.game.score = 0; showScreen('game'); nextStep(); };
         $('btn-next').onclick = () => { $('overlay-correct').style.display = 'none'; State.game.idx++; nextStep(); };
-        $('btn-retry').onclick = () => {
-            $('overlay-incorrect').style.display = 'none';
-            State.game.found = []; State.game.canTap = true; renderChoices();
-            speak(State.game.q.text);
-        };
+        $('btn-retry').onclick = () => { $('overlay-incorrect').style.display = 'none'; State.game.found = []; State.game.canTap = true; renderChoices(); speak(State.game.q.text); };
         $('btn-result-home').onclick = () => showScreen('title');
         $('btn-result-replay').onclick = () => { State.game.idx = 0; State.game.score = 0; showScreen('game'); nextStep(); };
         $('btn-hint').onclick = () => {
             Array.from($('choices-area').children).forEach((el, i) => {
                 if (State.game.q.choices[i].isTarget && !State.game.found.includes(i)) {
-                    el.classList.add('hint-glow'); setTimeout(() => el.classList.remove('hint-glow'), 2000);
+                    el.classList.add('hint-glow'); setTimeout(() => el.classList.remove('hint-glow'), 2500);
                 }
             });
         };
-
         $('menu-sq').onclick = () => speak('しかく');
         $('menu-rect').onclick = () => speak('ながしかく');
         $('menu-cir').onclick = () => speak('まる');
