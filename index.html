@@ -67,7 +67,7 @@
         }
 
         /* persistent UI */
-        .persistent-ui {
+        #persistent-ui {
             position: fixed;
             top: 0;
             left: 0;
@@ -99,7 +99,7 @@
             transform: scale(0.9);
         }
 
-        /* Ultimate iPad Safe Area Padding (220px bottom blank space) */
+        /* Global Screen Layout: Large safe areas for title/hint button */
         .screen {
             display: none;
             flex-direction: column;
@@ -107,20 +107,22 @@
             justify-content: flex-start;
             width: 100%;
             height: 100%;
-            padding: 100px 40px 220px;
+            padding: 180px 40px 240px;
+            overflow: hidden;
         }
 
         .screen.active {
             display: flex;
         }
 
-        /* Title Screen Grid */
+        /* Title Screen */
         h1 {
             font-size: 4rem;
             margin-bottom: 2rem;
             color: var(--primary-color);
             text-shadow: 2px 2px 0px #fff;
             text-align: center;
+            line-height: 1.2;
         }
 
         .home-grid {
@@ -136,6 +138,7 @@
             flex-direction: column;
             align-items: center;
             transition: all 0.2s;
+            width: 200px;
         }
 
         .menu-shape-container:active {
@@ -163,14 +166,14 @@
             border-radius: 60px;
             box-shadow: var(--card-shadow);
             border: 4px solid #4a90e2;
-            margin-bottom: 30px;
+            margin-bottom: 40px;
             font-size: 2.4rem;
             font-weight: bold;
             z-index: 10;
             flex-shrink: 0;
         }
 
-        /* Choice Area (Uses flex to fill middle space) */
+        /* Choice Area (OPTIMIZED SIZING) */
         .question-area {
             flex-grow: 1;
             display: flex;
@@ -186,7 +189,7 @@
             position: relative;
             width: 100%;
             height: 100%;
-            max-width: 1240px;
+            max-width: 1400px;
         }
 
         .shape-choice {
@@ -237,35 +240,35 @@
             padding: 12px 40px;
         }
 
-        /* Settings Grid */
+        /* Settings Grid (COMPACT & BALANCED) */
         .settings-grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
             gap: 10px;
             width: 100%;
             max-width: 1240px;
-            margin-top: 20px;
+            margin-top: 15px;
         }
 
         .setting-item {
             background: white;
-            padding: 12px 20px;
+            padding: 10px 18px;
             border-radius: 15px;
             box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
         }
 
         .setting-item label {
             display: block;
-            margin-bottom: 4px;
+            margin-bottom: 2px;
             font-weight: bold;
-            font-size: 1rem;
+            font-size: 0.95rem;
             color: #444;
         }
 
         .checkbox-row {
             display: flex;
             align-items: center;
-            gap: 12px;
+            gap: 10px;
             font-size: 1.1rem;
         }
 
@@ -329,72 +332,11 @@
             transform: rotate(-45deg);
         }
 
-        @keyframes pop {
-            from {
-                scale: 0.5;
-                opacity: 0;
-            }
-
-            to {
-                scale: 1;
-                opacity: 1;
-            }
-        }
-
-        .confetti {
-            position: absolute;
-            pointer-events: none;
-            z-index: 2100;
-        }
-
-        .celebration-emoji {
-            font-size: 12rem;
-            animation: bounce 0.8s infinite alternate;
-        }
-
-        @keyframes bounce {
-            from {
-                transform: translateY(0);
-            }
-
-            to {
-                transform: translateY(-40px);
-            }
-        }
-
-        @keyframes shake {
-            0% {
-                left: 0;
-            }
-
-            25% {
-                left: -10px;
-            }
-
-            50% {
-                left: 10px;
-            }
-
-            75% {
-                left: -10px;
-            }
-
-            100% {
-                left: 0;
-            }
-        }
-
-        .error-shake {
-            position: relative;
-            animation: shake 0.3s;
-        }
-
-        /* High-Visibility Hint Glow */
         .hint-glow {
-            outline: 12px solid #f1c40f !important;
+            outline: 14px solid #f1c40f !important;
             outline-offset: 8px;
             filter: brightness(1.4) drop-shadow(0 0 60px #f1c40f) !important;
-            transform: translate(-50%, -50%) scale(1.2) !important;
+            transform: translate(-50%, -50%) scale(1.1) !important;
             z-index: 100;
         }
     </style>
@@ -405,7 +347,7 @@
     <div id="bg-layer"></div>
 
     <div id="app">
-        <div class="persistent-ui">
+        <div id="persistent-ui">
             <div class="persistent-btn" id="btn-global-home" style="visibility: hidden;">🏠</div>
             <div class="persistent-btn" id="btn-global-settings">⚙️</div>
         </div>
@@ -439,12 +381,12 @@
                     <div class="menu-shape-label">さんかく</div>
                 </div>
             </div>
-            <button class="btn btn-large" id="btn-start">はじめる</button>
+            <button class="btn btn-large" id="btn-start" style="margin-top: 1rem;">はじめる</button>
         </div>
 
-        <!-- Settings Screen -->
-        <div id="screen-settings" class="screen" style="justify-content: center;">
-            <h2 style="margin-bottom: 5px;">先生用せってい</h2>
+        <!-- Settings Screen (Balanced & All-Visible) -->
+        <div id="screen-settings" class="screen" style="justify-content: center; padding: 80px 40px;">
+            <h2 style="margin-bottom: 5px; font-size: 2.8rem; color: #4a90e2;">先生用せってい</h2>
             <div class="settings-grid">
                 <div class="setting-item"><label>色ランダム:</label>
                     <div class="checkbox-row"><input type="checkbox" id="setting-random-color"><span>ON</span></div>
@@ -486,15 +428,15 @@
                 <div class="setting-item"><label>問題数:</label><input type="number" id="setting-count" value="10" min="1"
                         max="100" style="width:80px;height:45px;font-size:1.6rem;"></div>
             </div>
-            <div style="margin-top: 25px; display: flex; gap: 20px;">
-                <button class="btn btn-sub" id="btn-settings-back">戻る</button>
-                <button class="btn" id="btn-settings-apply">決定</button>
+            <div style="margin-top: 25px; display: flex; gap: 40px; justify-content: center; width: 100%;">
+                <button class="btn btn-sub" id="btn-settings-back" style="min-width: 180px;">戻る</button>
+                <button class="btn" id="btn-settings-apply" style="min-width: 180px;">決定</button>
             </div>
         </div>
 
         <!-- Game Screen -->
         <div id="screen-game" class="screen">
-            <div class="progress-container" style="top:90px;">
+            <div class="progress-container" style="top:110px;">
                 <div class="progress-bar" id="game-progress"></div>
             </div>
             <div class="question-area">
@@ -504,8 +446,7 @@
                 </div>
                 <div class="choices-area" id="choices-area"></div>
             </div>
-            <!-- Hint Button Positioned Well Above the Safety Blank Space -->
-            <div style="position: absolute; bottom: 80px; right: 40px; z-index: 100;">
+            <div style="position: absolute; bottom: 100px; right: 40px; z-index: 100;">
                 <button class="btn btn-sub" id="btn-hint"
                     style="background-color: #f1c40f; box-shadow: 0 4px #d4ac0d;">ヒント</button>
             </div>
@@ -595,6 +536,16 @@
             window.speechSynthesis.speak(ut);
         }
 
+        function calculateGlobalBaseSize(cols, rows) {
+            const area = $('choices-area');
+            const w = area.offsetWidth || 1000;
+            const h = area.offsetHeight || 600;
+            const cellW = w / cols;
+            const cellH = h / rows;
+            // INCREASED SCALING MULTIPLIER (0.7 -> 0.85) FOR LARGER SHAPES
+            return Math.min(cellW / 1.6, cellH / 1.6) * 0.85;
+        }
+
         function generateQuestion() {
             const cfg = State.config;
             const palette = ['#e74c3c', '#3498db', '#2ecc71', '#f1c40f', '#9b59b6'];
@@ -605,18 +556,16 @@
             const text = `${names[target]} を ${cfg.multiSelect ? 'ぜんぶ ' : ''}えらぼう`;
 
             const count = parseInt(cfg.choicesCount);
-            let cols, rows, baseSize;
-            // SIGNIFICANTLY REDUCED SIZES TO PREVENT ANY OVERLAP
-            if (count <= 2) { cols = 2; rows = 1; baseSize = 220; }
-            else if (count <= 4) { cols = 2; rows = 2; baseSize = 140; }
-            else if (count <= 6) { cols = 3; rows = 2; baseSize = 110; }
-            else if (count <= 9) { cols = 3; rows = 3; baseSize = 90; }
-            else if (count <= 12) { cols = 4; rows = 3; baseSize = 75; }
-            else { cols = 5; rows = 3; baseSize = 60; }
+            let cols, rows;
+            if (count <= 2) { cols = 2; rows = 1; }
+            else if (count <= 4) { cols = 2; rows = 2; }
+            else if (count <= 6) { cols = 3; rows = 2; }
+            else if (count <= 9) { cols = 3; rows = 3; }
+            else if (count <= 12) { cols = 4; rows = 3; }
+            else { cols = 5; rows = 3; }
 
-            const cellW = 100 / cols; const cellH = 100 / rows;
-            // Strictly center within cells for zero-overlap guarantee
-            const jitterX = 0; const jitterY = 0;
+            const baseSize = calculateGlobalBaseSize(cols, rows);
+            const cellWPercent = 100 / cols; const cellHPercent = 100 / rows;
 
             let choices = [];
             const pool = ['square', 'rectangle', 'rect_v'];
@@ -629,8 +578,8 @@
                 const size = baseSize * (cfg.randomSize ? (0.8 + Math.random() * 0.2) : 1);
                 const rot = cfg.randomRotation ? (Math.random() * 80 - 40) : (type === 'rectangle' && Math.random() > 0.5 ? 90 : 0);
                 const col = i % cols; const row = Math.floor(i / cols);
-                const x = (col + 0.5) * cellW;
-                const y = (row + 0.5) * cellH; // No extra clamping here - the choices-area itself is sized via padding
+                const x = (col + 0.5) * cellWPercent;
+                const y = (row + 0.5) * cellHPercent;
                 choices.push({ type, color, size, rot, isTarget, x, y });
             }
             choices.sort(() => Math.random() - 0.5);
@@ -680,7 +629,8 @@
         function showScreen(id) {
             document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
             $(`screen-${id}`).classList.add('active');
-            $('btn-global-home').style.visibility = id === 'title' ? 'hidden' : 'visible';
+            $('persistent-ui').style.display = (id === 'settings') ? 'none' : 'flex';
+            $('btn-global-home').style.visibility = (id === 'title' || id === 'settings') ? 'hidden' : 'visible';
         }
 
         const nextStep = () => {
@@ -691,11 +641,13 @@
                 $('result-score').textContent = `${State.config.count}問中 ${State.game.score}問せいかい！`;
                 Sound.success(); spawnConfetti(); return;
             }
-            State.game.q = generateQuestion(); State.game.found = []; State.game.canTap = true;
-            $('instruction-text').textContent = State.game.q.text;
-            $('instruction-guide').innerHTML = State.config.guidemark ? getShapeHTML(State.game.q.targetType, '#95a5a6', 40, 0, true) : '';
-            $('game-progress').style.width = (State.game.idx / State.config.count) * 100 + '%';
-            renderChoices(); speak(State.game.q.text);
+            setTimeout(() => {
+                State.game.q = generateQuestion(); State.game.found = []; State.game.canTap = true;
+                $('instruction-text').textContent = State.game.q.text;
+                $('instruction-guide').innerHTML = State.config.guidemark ? getShapeHTML(State.game.q.targetType, '#95a5a6', 40, 0, true) : '';
+                $('game-progress').style.width = (State.game.idx / State.config.count) * 100 + '%';
+                renderChoices(); speak(State.game.q.text);
+            }, 50);
         }
 
         // --- UI Events ---
